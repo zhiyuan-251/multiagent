@@ -66,7 +66,12 @@ set -e
 echo "Step 2: Building corpus cache from scratch..."
 echo "----------------------------------------"
 echo "This will take several minutes..."
-python3 scripts/build_full_corpus_cache.py
+if [ -f "data/hotpotqa_corpus_full.json" ]; then
+    echo "✓ Found existing corpus cache: data/hotpotqa_corpus_full.json, skipping build."
+else
+    echo "Building full corpus cache..."
+    python3 scripts/build_full_corpus_cache.py
+fi
 if [ $? -ne 0 ]; then
     echo ""
     echo "❌ Cache building failed!"
